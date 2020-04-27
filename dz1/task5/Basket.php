@@ -4,53 +4,36 @@ class Basket
 {
     public $goods = [];
 
-    public function addProduct($product, $count)
+    public function addProduct($product, $quantity)
     {
         $this->goods[] = [
             'product' => $product,
-            'count' => $count,
-            'sum' => $product->price * $count,
+            'quantity' => $quantity,
         ];
     }
 
-    public function delProduct($product)
+    public function getPrice()
     {
-        $this->goods = array_filter(
-                    $this->goods,
-                    function ($item) use ($product) {
-                        return $item != $product;
-                    }
-                );
+        if (count($this->goods) == 0) {
+            return 0;
+        }
+
+        $total=0;
+
+        foreach($this->goods as $item){
+            $total +=$item['product']->price* $item['quantity'];
+        }
+        return $total;
     }
 
     public function describe()
     {
-        if (count($this->goods) == 0){
-            $basket = "корзина пуста";
-        } 
-        else {
-            $basket="товар / цена / количество / сумма<br>";
+        $strBasket = '';
 
-            foreach($this->goods as $item){
-                $product = $item['product']->name;
-                $price= $item['product']->price;
-                $count = $item['count'];
-                $sum = $item['sum'];
-
-                $basket .= "$product / $price / $count / $sum<br>";
-            };
+        foreach ($this->goods as $element) {
+            $strBasket .= $element['product']->getName() . '-' . $element['product']->getPrice() . '-' . $element['quantity'] . '<br>';
         }
 
-        return  $basket;
-
-    }
-
-    public function getTotal()
-    {
-        if (count($this->goods) == 0){
-            return 0;
-        } 
-
-        return array_sum(array_column($this->goods, 'sum'));
+        return $strBasket;
     }
 }
