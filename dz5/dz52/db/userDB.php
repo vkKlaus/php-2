@@ -70,4 +70,9 @@ return [
 'name'=>'trytyeryerytr',
 'age'=>56,
 ],
+'user1@emai7l.com' => [
+'id'=>14,
+'name'=>'wdfwedfwe',
+'age'=>234,
+],
 ];

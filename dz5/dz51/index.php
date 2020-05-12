@@ -6,7 +6,7 @@ require  $_SERVER['DOCUMENT_ROOT'] . '/Division.php';
 $num1 = 5;
 $num2 = 10;
 
-function add($num1 = 0, $num2 = 0)
+function add($num1, $num2)
 {
     return $num1 + $num2;
 };

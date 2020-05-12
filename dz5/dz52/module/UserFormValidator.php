@@ -20,21 +20,11 @@ class UserFormValidator
         if (!array_key_exists('email', $data)) {
             $error .= 'отсутствует email' . PHP_EOL;
         } elseif (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            $error .= 'не правильный формат email' . PHP_EOL;
+            $error .= 'Не правильный формат email' . PHP_EOL;
         }
 
         if (empty($error)) {
-            $user = new User();
-
-            try {
-                return $user->load($data['email']);
-            } catch (\Exception $e) {
-                try {
-                    return $user->save($data);
-                } catch (\Exception $e) {
-                    throw new Exception($e->getMessage());
-                }
-            }
+            return true;
         } else {
             throw new Exception($error);
         }

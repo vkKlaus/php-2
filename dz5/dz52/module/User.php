@@ -11,7 +11,7 @@ class User
 
     public function load($id)
     {
-        $user = $this->db->findUser($id);
+        $user = $this->db->findUser($id['email']);
 
         if ($user) {
             return $user['id'];

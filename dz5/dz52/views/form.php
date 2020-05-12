@@ -1,10 +1,11 @@
 <?php
 
-$success = '';
+$success = false;
 $error = '';
 $name = '';
 $age = '';
 $email = '';
+$id = '';
 
 if (!empty($_POST)) {
     try {
@@ -13,14 +14,27 @@ if (!empty($_POST)) {
         $error = '';
     } catch (\Exception $e) {
         $error = $e->getMessage();
-    }finally{
+    } finally {
         $name = $_POST['name'];
 
         $age = $_POST['age'];
-        
+
         $email = $_POST['email'];
     }
 
+
+    if ($success) {
+        $user = new User();
+        try {
+            $id = 'id пользователя: ' . $user->load($_POST);
+        } catch (\Exception $e) {
+            try {
+                $id = 'id пользователя: ' . $user->save($_POST);
+            } catch (\Exception $e) {
+                $error = $e->getMessage();
+            }
+        }
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -66,10 +80,11 @@ if (!empty($_POST)) {
         </ul>
     </form>
 
+    <pre class="success_registration message"><?= ($success ? "Валидация пройдена" : "") ?></pre>
+   
+    <pre class="success_registration message"><?= $id  ?></pre>
+
     <pre class="error_registration message"><?= $error ?></pre>
-
-    <pre class="success_registration message"><?= 'id пользователя:' . $success ?></pre>
-
 
 
 </body>
